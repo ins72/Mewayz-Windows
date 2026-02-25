@@ -41,12 +41,18 @@ PrivilegesRequiredOverridesAllowed=dialog
 OutputBaseFilename=mewayz
 SolidCompression=yes
 WizardStyle=modern windows11
-; Code signing: define the sign tool in Inno Setup IDE via
-;   Tools > Preferences > Sign Tools, name it "signtool", command:
-;   signtool.exe sign /a /n "Mewayz Global, Corp." /tr http://timestamp.digicert.com /td sha256 /fd sha256 $f
-; Or pass via ISCC command line: /Ssigntool=signtool.exe sign ... $f
-; Signing is skipped if the tool is not defined (use /DSIGN=1 to enable).
+; ── Code Signing ─────────────────────────────────────────────────────────────
+; Run create-cert.ps1 (as Administrator) once to generate mewayz-codesign.pfx
+; and obtain the certificate thumbprint, then compile with:
+;
+;   ISCC.exe /DSIGN=1 /DCERT_THUMB=<thumbprint> testt.iss
+;
+; Signing is skipped when SIGN is not defined (plain IDE builds work fine).
+; ─────────────────────────────────────────────────────────────────────────────
 #ifdef SIGN
+; "signtool" is the name of the sign tool defined via:
+;   /Ssigntool=signtool.exe sign /sha1 <THUMB> /tr http://timestamp.digicert.com /td sha256 /fd sha256 $f
+; See create-cert.ps1 — it prints the exact ISCC command to use.
 SignTool=signtool
 SignedUninstaller=yes
 #endif
