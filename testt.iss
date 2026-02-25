@@ -41,8 +41,15 @@ PrivilegesRequiredOverridesAllowed=dialog
 OutputBaseFilename=mewayz
 SolidCompression=yes
 WizardStyle=modern windows11
-SignTool=signtool sign /a /n "Mewayz Global, Corp." /tr http://timestamp.digicert.com /td sha256 /fd sha256 $f
+; Code signing: define the sign tool in Inno Setup IDE via
+;   Tools > Preferences > Sign Tools, name it "signtool", command:
+;   signtool.exe sign /a /n "Mewayz Global, Corp." /tr http://timestamp.digicert.com /td sha256 /fd sha256 $f
+; Or pass via ISCC command line: /Ssigntool=signtool.exe sign ... $f
+; Signing is skipped if the tool is not defined (use /DSIGN=1 to enable).
+#ifdef SIGN
+SignTool=signtool
 SignedUninstaller=yes
+#endif
 
 [Tasks]
 Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{cm:AdditionalIcons}"; Flags: unchecked
