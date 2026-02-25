@@ -41,6 +41,8 @@ PrivilegesRequiredOverridesAllowed=dialog
 OutputBaseFilename=mewayz
 SolidCompression=yes
 WizardStyle=modern windows11
+SignTool=signtool sign /a /n "Mewayz Global, Corp." /tr http://timestamp.digicert.com /td sha256 /fd sha256 $f
+SignedUninstaller=yes
 
 [Tasks]
 Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{cm:AdditionalIcons}"; Flags: unchecked
